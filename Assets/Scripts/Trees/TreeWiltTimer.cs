@@ -5,12 +5,12 @@ using UnityEngine;
 // a Tree component is also attached." If you forget to add Tree,
 // Unity will add it automatically. It also prevents accidentally
 // removing Tree while TreeWiltTimer is still present.
-[RequireComponent(typeof(Tree))] 
+[RequireComponent(typeof(Trees))] 
 public class TreeWiltTimer : MonoBehaviour
 {
     // [Header] creates a labelled section in the Unity Inspector.
     // Useful for organising fields when a script has many parameters.
-    [Header("Sun Wilt Rates (HP/secO)")]
+    [Header("Sun Wilt Rates (HP/sec)")]
 
     // [SerializeField] exposes a private field in the Inspector.
     // Private keeps the field safe from other scripts reading/writing it
@@ -30,7 +30,7 @@ public class TreeWiltTimer : MonoBehaviour
     // Private reference to the sibling Tree component on the same GameObject.
     // Cached in Awake() so we don't call GetComponent<Tree>() every frame,
     // which would be slow at runtime.
-    private Tree tree;
+    private Trees tree;
 
     // Awake() runs once when the GameObject is first initialised,
     // before any Update() calls. It is the standard place to resolve
@@ -40,7 +40,7 @@ public class TreeWiltTimer : MonoBehaviour
         // GetComponent<Tree>() searches this GameObject for a Tree component
         // and stores the reference. Because [RequireComponent] guarantees
         // Tree exists, this will never return null.
-        tree = GetComponent<Tree>();
+        tree = GetComponent<Trees>();
     }
 
     // Update() is called by Unity once per frame, for every active
@@ -56,7 +56,7 @@ public class TreeWiltTimer : MonoBehaviour
         // receive no sun damage at all (the GDD rule: "if not in sun,
         // no passive damage for now"). IsExposedToSun is set each frame
         // by SunController based on distance from the sun entity.
-        if (!tree.IsExposedToSun) return;
+        //if (!tree.IsExposedToSun) return;
 
         // At this point we know: the tree is alive AND in sun range.
         // Now determine which damage rate applies this frame.

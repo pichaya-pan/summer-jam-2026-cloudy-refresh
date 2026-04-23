@@ -57,6 +57,9 @@ TagManager:
   - name: Player
     uniqueID: 1898309265
     locked: 0
+  - name: Sun
+    uniqueID: 2161303633
+    locked: 0
   - name: UI
     uniqueID: 1998243147
     locked: 0

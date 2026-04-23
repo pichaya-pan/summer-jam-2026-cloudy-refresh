@@ -19,7 +19,7 @@ using System;   // Required for Action<> delegate types
 /// and TreeWiltTimer respectively.
 /// </summary>
 
-public class Tree : MonoBehaviour
+public class Trees : MonoBehaviour
 {
     // -------------------------------------------------------------------------
     // Enum: WiltState
@@ -66,13 +66,13 @@ public class Tree : MonoBehaviour
     // -------------------------------------------------------------------------
 
     /// <summary>Fires once when health hits 0 and the tree enters the Dead state.</summary>
-    public event Action<Tree> OnTreeDied;
+    public event Action<Trees> OnTreeDied;
 
     /// <summary>Fires whenever WiltState changes in either direction.</summary>
-    public event Action<Tree, WiltState> OnWiltStateChanged;
+    public event Action<Trees, WiltState> OnWiltStateChanged;
 
     /// <summary> Fires when WiltState transitions to a numerically higher (worse) state.</summary>
-    public event Action<Tree, WiltState> OnTreeRestoredToState;
+    public event Action<Trees, WiltState> OnTreeRestoredToState;
 
     // Tracks the previous WiltState so transitions can be detected
     private WiltState previousWiltState;
@@ -89,6 +89,7 @@ public class Tree : MonoBehaviour
         RefreshWiltState(); // Ensure state matches whatever health starts at
     }
 
+ 
     // -------------------------------------------------------------------------
     // Public API: ReceiveRain
     // Called by RainZone each frame while a tree is inside the rain collider.
@@ -138,8 +139,8 @@ public class Tree : MonoBehaviour
 
         if (health <= 0f) newState = WiltState.Dead;
         else if (health <= 19f) newState = WiltState.Critical;
-        else if (health <= 19f) newState = WiltState.Wilting;
-        else if (health <= 19f) newState = WiltState.Dry;
+        else if (health <= 49f) newState = WiltState.Wilting;
+        else if (health <= 79f) newState = WiltState.Dry;
         else newState = WiltState.Lush;
 
         // Only act if the state has actually changed — avoids event spam

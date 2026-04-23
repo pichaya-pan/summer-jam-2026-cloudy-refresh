@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5c73c23a1dda01f44be106786805d407
+guid: 0f561ceebc875ab448ba6beae56f9a52
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5017724895372249693
-    second: Sprite_sun_idle_0
+      213: 4079010334235313315
+    second: tree_wilting_f3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprite_sun_idle_0
+      name: tree_wilting_f3_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 0
-        width: 122
-        height: 120
+        width: 128
+        height: 101
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3a5f3beeac57d5ab0800000000000000
-      internalID: -5017724895372249693
+      spriteID: 3a44e37994e8b9830800000000000000
+      internalID: 4079010334235313315
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sprite_sun_idle_0: -5017724895372249693
+      tree_wilting_f3_0: 4079010334235313315
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

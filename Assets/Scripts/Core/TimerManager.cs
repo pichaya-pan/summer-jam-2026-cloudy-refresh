@@ -74,4 +74,18 @@ public class TimerManager : MonoBehaviour
         CurrentTime += seconds;
     }
 
+    // Added for Day 3 — resets the timer to a new duration from LevelData
+    /// <summary>
+    /// Resets the timer to a specific duration.
+    /// Called by LevelDataLoader when a level loads, so each level
+    /// can have its own countdown length from LevelData.timerSeconds.
+    /// </summary>
+    public void SetTime(float seconds)
+    {
+        startingTime = seconds;   // update the stored starting value
+        CurrentTime = seconds;    // reset the live countdown
+        hasEnded = false;         // allow the timer to run again
+        IsRunning = true;
+    }
+
 }

@@ -131,6 +131,38 @@ public class Trees : MonoBehaviour
     //   1–19  → Critical
     //   = 0   → Dead
     // -------------------------------------------------------------------------
+
+    // Restores the tree to its initial healthy state.
+    // Called by ForestManager.BuildForest() each time a level loads or reloads.
+    // Ensures no stale health, state, or flags carry over from a previous run.
+    public void ResetTree()
+    {
+        // Restore health to full.
+        health = 100f;
+
+        // Clear the dead flag — this tree is alive again.
+        isDead = false;
+
+        // Reset both the current and previous wilt state to Lush.
+        // previousWiltState is used by RefreshWiltState() to detect direction of change,
+        // so it must also be reset to avoid a false "restored" event firing on the first frame.
+        CurrentWiltState = WiltState.Lush;
+        previousWiltState = WiltState.Lush;
+
+        // Clear the per-frame flags set by ShadowZone and SunController each frame.
+        // Without this, a tree spawned mid-level could inherit the previous tree's shade/exposure state
+        // for one frame before those systems have a chance to re-evaluate it.
+        IsShaded = false;
+        IsExposedToSun = false;
+    }
+
+    public void ReceiveDroughtPulseDamage()
+    {
+        if (isDead) return;              // Guard: don't damage a dead tree
+        health = Mathf.Clamp(health - 20f, 0f, 100f); // Deal 20 HP, keep in bounds
+        RefreshWiltState();             // Update WiltState enum + fire events
+    }
+
     private void RefreshWiltState()
     {
         // Determine the new state from health. Checked worst-first so the
@@ -170,5 +202,6 @@ public class Trees : MonoBehaviour
 
     }
 
+    
 
 }

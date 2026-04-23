@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5871372489657475562}
   - component: {fileID: 8311698481706632503}
   - component: {fileID: 5856388444160306737}
-  - component: {fileID: 5453728698402558884}
-  - component: {fileID: 5194480854238379717}
-  - component: {fileID: 765784979705545186}
+  - component: {fileID: -6482829174996655043}
+  - component: {fileID: 3079993247743460095}
+  - component: {fileID: 4797046193577528559}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -164,7 +164,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5453728698402558884
+--- !u!114 &-6482829174996655043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Trees
   health: 100
   isDead: 0
---- !u!114 &5194480854238379717
+--- !u!114 &3079993247743460095
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,9 +190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283abf5615e28444ea8c200348af72a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeWiltTimer
-  exposedWiltRate: 3
-  shadedWiltRate: 0.75
---- !u!114 &765784979705545186
+  exposedWiltRate: 4
+  shadedWiltRate: 1
+--- !u!114 &4797046193577528559
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

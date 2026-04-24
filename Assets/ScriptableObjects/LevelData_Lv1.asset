@@ -15,11 +15,11 @@ MonoBehaviour:
   levelName: Level 1
   levelIndex: 1
   treeCount: 8
-  timerSeconds: 90
+  timerSeconds: 60
   goalType: 0
   goalValue: 5
   wiltSpeedMultiplier: 1
-  maxDeadTreesAllowed: 5
+  maxDeadTreesAllowed: 2
   hasWind: 0
   windStrength: 0
   windInterval: 0

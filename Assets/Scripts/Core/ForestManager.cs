@@ -55,6 +55,7 @@ public class ForestManager : MonoBehaviour
     [SerializeField] private int deadTreeLoseThreshold = 5;
 
     private bool deadEventFired = false; // guard: only fire once per level
+    private Coroutine deadEventCoroutine;
 
     private void Update()
     {
@@ -66,17 +67,29 @@ public class ForestManager : MonoBehaviour
         if (!deadEventFired && deadCount >= deadTreeLoseThreshold)
         {
             deadEventFired = true;
-            OnForestDead?.Invoke();
+            //OnForestDead?.Invoke();
+            // Start coroutine instead of firing immediately
+            deadEventCoroutine = StartCoroutine(FireDeadEventDelayed());
         }
     }
 
     // Called by LevelDataLoader when a level starts (or restarts).
     // Wipes the existing forest and builds a fresh one from the level's spawn layout.
+    public event Action<Trees> OnTreeRegistered;
     public void BuildForest(LevelData levelData)
     {
+        if (deadEventCoroutine != null)
+        {
+            StopCoroutine(deadEventCoroutine);
+            deadEventCoroutine = null;
+        }
+
         // Always clear first — ensures no leftover trees from a previous level or test run.
         ClearForest();
         deadEventFired = false; // reset guard for new level
+
+
+        deadTreeLoseThreshold = levelData.maxDeadTreesAllowed;
 
         // Guard: if no layout asset is assigned to this level, log an error and bail out.
         // Without this check, the foreach below would throw a NullReferenceException.
@@ -108,6 +121,7 @@ public class ForestManager : MonoBehaviour
                 // Register this tree in the live registry.
                 // From this point on, other systems read from ActiveTrees instead of scanning the scene.
                 activeTrees.Add(tree);
+                OnTreeRegistered?.Invoke(tree);
             }
         }
     }
@@ -127,5 +141,13 @@ public class ForestManager : MonoBehaviour
 
         // Wipe the registry to match. After this, activeTrees.Count == 0.
         activeTrees.Clear();
+    }
+
+    private System.Collections.IEnumerator FireDeadEventDelayed()
+    {
+        // Wait enough frames for the Dead animation to actually begin playing.
+        // 2 frames is usually enough; 0.5s gives a visible moment of drama.
+        yield return new WaitForSecondsRealtime(0.5f);
+        OnForestDead?.Invoke();
     }
 }

@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
     // You drag the three AudioSource components into these slots manually.
     // Each AudioSource is an independent playback channel; Unity lets one
     // GameObject carry multiple AudioSources to separate concerns cleanly.
-    [SerializeField] private AudioSource bgmSource;         // looping background music
+    private AudioSource bgmSource;         // looping background music
     [SerializeField] private AudioSource sfxSource;         // one-shot sound effects
     [SerializeField] private AudioSource sunDroneSource;    // heat-driven ambient drone
 
@@ -61,6 +61,13 @@ public class AudioManager : MonoBehaviour
         bgmSource.loop = true;  // BGM should loop indefinitely
         bgmSource.Play();       // begin playback from the start of the clip
     }
+
+    public void StopBGM()
+    {
+        if (bgmSource != null && bgmSource.isPlaying)
+            bgmSource.Stop();
+    }
+
 
     // --- PlaySFX(AudioClip clip) ---
     // Fires a one-shot sound effect.

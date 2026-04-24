@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
     // This protects the score from being accidentally changed by other systems.
     public int Score { get; private set; }
 
+    [SerializeField] private ForestManager forestManager;
     // Local reference to every Tree in the scene, populated once at Start.
     private Trees[] trees;
 
@@ -16,17 +17,16 @@ public class ScoreManager : MonoBehaviour
     // We use it to find all trees and subscribe to their restoration events.
     private void Start()
     {
-        // Scan the scene for every active Tree component.
-        // FindObjectsSortMode.None means we don't need results in any particular order.
-        trees = FindObjectsByType<Trees>(FindObjectsSortMode.None);
 
-        // Loop through every tree and register our handler method as a listener.
-        // From this point on, whenever a tree fires OnTreeRestoredToState,
-        // Unity will automatically call HandleTreeRestored on this ScoreManager.
-        for (int i = 0; i < trees.Length; i++)
-        {
-            trees[i].OnTreeRestoredToState += HandleTreeRestored;
-        }
+        // Subscribe to ForestManager so we get notified when trees are registered
+        if (forestManager != null)
+            forestManager.OnTreeRegistered += HandleTreeRegistered;
+        
+    }
+
+    private void HandleTreeRegistered(Trees tree)
+    {
+        tree.OnTreeRestoredToState += HandleTreeRestored;
     }
 
     // This method is called automatically each time a tree recovers to a healthier state.
@@ -65,10 +65,13 @@ public class ScoreManager : MonoBehaviour
         // Multiply points by 1.5× (50% bonus), then round to the nearest integer.
         // Mathf.RoundToInt() is needed because multiplying an int by a float (1.5f)
         // produces a float, which must be converted back to int for Score.
+        
+        /*
         if (tree.IsShaded)
         {
             points = Mathf.RoundToInt(points * 1.5f);
         }
+        */
 
         // Add the final point value to the running total.
 

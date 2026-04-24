@@ -27,6 +27,9 @@ public class GameStateManager : MonoBehaviour
     // while still being wirable in the editor.
     [SerializeField] private TimerManager timerManager;
     [SerializeField] private ForestManager forestManager;
+    [SerializeField] private GameOverUI gameOverUI;
+    [SerializeField] private GameObject bgmSource;
+
 
     // Start() is a Unity lifecycle method called once, on the first frame
     // the script is active. This is where you do one-time setup/wiring.
@@ -49,6 +52,8 @@ public class GameStateManager : MonoBehaviour
             forestManager.OnForestDead += HandleForestDead;
         }
 
+        bgmSource?.SetActive(true);
+
     }
 
     // This is the event handler for when the countdown timer hits zero.
@@ -56,13 +61,13 @@ public class GameStateManager : MonoBehaviour
     // it only fires via the event subscription above.
     private void HandleTimerEnd()
     {
-        SetGameOver();  // Timer ran out → player loses
+        SetGameOver("Timer ran out");  // Timer ran out → player loses
     }
 
     // Event handler for when ForestManager reports too many dead trees.
     private void HandleForestDead()
     {
-        SetGameOver();  // Forest died → player loses
+        SetGameOver("Too many trees died");  // Forest died → player loses
     }
 
     // Public method — other scripts (e.g. LevelManager) call this
@@ -79,7 +84,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     // Public method for triggering the lose state.
-    private void SetGameOver()
+    private void SetGameOver(string cause)
     {
         // Guard clause: if we're already in GameOver, do nothing.
         // This prevents the method from running twice if both
@@ -90,6 +95,9 @@ public class GameStateManager : MonoBehaviour
 
         // Same as SetLevelComplete — freeze the game world.
         Time.timeScale = 0f;
+        bgmSource?.SetActive(false);
+        gameOverUI.Show(cause);          // shows panel, stops BGM, pauses
+
     }
 
 }
